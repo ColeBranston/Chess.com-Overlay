@@ -1,0 +1,36 @@
+.cgr-dock {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 2147483000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+.cgr-hints {
+  display: block;
+  width: 320px;
+  max-width: calc(100vw - 40px);
+  height: 120px;
+  border: 0;
+  border-radius: 8px;
+  background: #2c2b28;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+.cgr-btn {
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 8px;
+  background: #373532;
+  color: #ecebe8;
+  font: 700 14px/1 "Segoe UI", system-ui, sans-serif;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+}
+.cgr-btn:hover { background: #44413c; }
+.cgr-arrows {
+  position: fixed;
+  z-index: 2147482999;
+  pointer-events: none;
+}

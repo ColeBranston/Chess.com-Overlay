@@ -1,0 +1,90 @@
+/* Live hints overlay, shown in an iframe on chess.com's analysis board and on finished games */
+:root {
+  --bg:#2c2b28; --surface-2:#373532; --line:#44413c;
+  --fg:#ecebe8; --muted:#a8a49d; --faint:#7d7972;
+  --accent:#86b84f; --reply:#5fb3d6;
+  --eval-white:#efeeea; --eval-black:#3b3935;
+  --c-best:#86b84f; --c-exc:#a3c65e; --c-good:#94ae8a; --c-inacc:#e9b934; --c-mist:#f0913d; --c-blund:#e5493a;
+  --font-ui:"Segoe UI",system-ui,sans-serif;
+  color-scheme:dark;
+}
+* { box-sizing:border-box; }
+html, body { margin:0; background:var(--bg); color:var(--fg); }
+body { font-family:var(--font-ui); font-size:13.5px; line-height:1.4; padding:10px 12px 12px; }
+
+.head { display:flex; align-items:baseline; gap:10px; margin-bottom:8px; }
+.title { font-weight:700; font-size:14px; }
+.opt { display:inline-flex; align-items:center; gap:4px; color:var(--muted); font-size:12px; cursor:pointer; }
+.opt input { margin:0; accent-color:var(--accent); }
+.meta { margin-left:auto; color:var(--faint); font-size:12px; }
+
+.note { margin:0; color:var(--muted); }
+.side { margin:0 0 6px; color:var(--muted); font-size:12.5px; }
+.side strong { color:var(--fg); }
+.dim { color:var(--faint); font-size:12px; font-weight:400; }
+.fine { margin:6px 0 0; color:var(--faint); font-size:11px; line-height:1.35; }
+
+section + section { margin-top:8px; }
+.side-block { padding:6px 8px; border-radius:6px; background:var(--surface-2); }
+
+/* Eval */
+.evalbar { height:10px; border-radius:5px; overflow:hidden; background:var(--eval-black); border:1px solid var(--line); }
+.evalbar span { display:block; height:100%; background:var(--eval-white); transition:width .3s; }
+.evalrow { display:flex; align-items:baseline; gap:8px; margin-top:4px; }
+.evalnum { font-weight:700; font-size:18px; font-variant-numeric:tabular-nums; }
+.evaltext { color:var(--muted); font-size:12.5px; }
+
+/* Last move */
+.mi-title { display:flex; align-items:center; gap:8px; font-size:15px; font-weight:700; }
+.mi-text { margin:4px 0 0; color:var(--muted); font-size:12.5px; }
+.mi-text strong { color:var(--fg); }
+
+/* Top 3 lines */
+.score { flex:none; min-width:46px; text-align:center; font-weight:700; font-size:12px; padding:1px 5px; border-radius:4px; }
+.score.w { background:var(--eval-white); color:#222; }
+.score.b { background:var(--eval-black); color:var(--fg); border:1px solid var(--line); }
+.line { display:flex; gap:8px; align-items:baseline; margin-top:4px; }
+.line .move { flex:none; font-weight:700; font-size:15px; }
+.best .line:first-of-type .move { color:var(--accent); }
+.reply .line:first-of-type .move { color:var(--reply); }
+.line .pv { color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+/* Move ratings */
+.tag { display:inline-grid; place-items:center; min-width:18px; height:16px; padding:0 3px; border-radius:3px; font-size:10.5px; font-weight:700; color:#1b1a18; line-height:1; }
+.tag.best { background:var(--c-best); } .tag.exc { background:var(--c-exc); } .tag.good { background:var(--c-good); }
+.tag.inacc { background:var(--c-inacc); } .tag.mist { background:var(--c-mist); } .tag.blund { background:var(--c-blund); }
+
+/* Finished game */
+.graph { display:block; width:100%; height:56px; border-radius:4px; }
+.g-bg { fill:var(--eval-black); }
+.g-fill { fill:var(--eval-white); }
+.g-mid { stroke:var(--faint); stroke-dasharray:3 3; stroke-width:1; vector-effect:non-scaling-stroke; }
+.g-cur { stroke:var(--accent); stroke-width:2; vector-effect:non-scaling-stroke; }
+details { margin-top:8px; }
+summary { cursor:pointer; color:var(--muted); font-size:12.5px; font-weight:600; }
+summary strong { color:var(--fg); }
+
+.card { margin-top:8px; padding-top:8px; border-top:1px solid var(--line); }
+.prow { display:flex; justify-content:space-between; align-items:baseline; gap:8px; }
+.pname { font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.pname::before { content:""; display:inline-block; width:9px; height:9px; margin-right:6px; border-radius:2px; border:1px solid var(--line); }
+.pname.w::before { background:var(--eval-white); }
+.pname.b::before { background:var(--eval-black); }
+.presult { font-weight:700; font-size:15px; }
+.big-row { display:flex; gap:20px; flex-wrap:wrap; margin:6px 0; }
+.big { display:flex; flex-direction:column; }
+.big .v { font-weight:700; font-size:22px; line-height:1.1; font-variant-numeric:tabular-nums; }
+.big .k { font-size:11px; color:var(--muted); }
+.chip { display:inline-block; vertical-align:middle; font-size:10.5px; font-weight:700; letter-spacing:.04em; padding:1px 7px; border-radius:999px; color:#1b1a18; }
+.chip.ok { background:var(--c-good); } .chip.strong { background:var(--c-exc); } .chip.warn { background:var(--c-inacc); } .chip.high { background:var(--c-blund); }
+table.stats { width:100%; border-collapse:collapse; font-size:12px; font-variant-numeric:tabular-nums; }
+.stats th, .stats td { padding:3px 0; text-align:left; border-top:1px solid var(--line); vertical-align:baseline; }
+.stats th { font-weight:400; color:var(--muted); padding-right:8px; }
+.stats td { text-align:right; }
+.counts { display:flex; flex-wrap:wrap; gap:4px 10px; margin-top:6px; font-size:12px; color:var(--muted); }
+.counts span { display:inline-flex; align-items:center; gap:4px; }
+
+.moves { margin-top:6px; max-height:200px; overflow-y:auto; display:grid; grid-template-columns:2.4em 1fr 1fr; row-gap:1px; font-size:12.5px; font-variant-numeric:tabular-nums; }
+.moves .num { color:var(--faint); padding:2px 0; }
+.mv { display:flex; align-items:center; gap:5px; padding:2px 5px; border-radius:4px; min-width:0; }
+.mv.cur { background:var(--bg); outline:1px solid var(--faint); }

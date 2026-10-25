@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Live hints</title>
+<link rel="stylesheet" href="hints.css">
+</head>
+<body>
+  <header class="head">
+    <span class="title">Live hints</span>
+    <label class="opt" title="Green: top 3 moves (best is boldest). Blue: the best reply. Dashed orange: what should have been played instead of the last move.">
+      <input type="checkbox" id="arrowsOpt" checked> Arrows
+    </label>
+    <span class="meta" id="meta"></span>
+  </header>
+  <div id="body"><p class="note">Waiting for the board…</p></div>
+  <script src="lib/chess.min.js"></script>
+  <script src="scoring.js"></script>
+  <script src="hints.js"></script>
+</body>
+</html>
